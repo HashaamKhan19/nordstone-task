@@ -10,15 +10,6 @@ export const AuthProvider = ({children}) => {
 
   const [user, setUser] = useState(null);
 
-  const login = async data => {
-    setIsLoading(true);
-    setToken(data?.token || null);
-    setUser(data || null);
-    await deviceStorage.saveItem('user', data || null);
-    await deviceStorage.saveItem('token', data?.token || null);
-    setIsLoading(false);
-  };
-
   const logout = async () => {
     setIsLoading(true);
     setToken(null);
@@ -33,7 +24,7 @@ export const AuthProvider = ({children}) => {
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{login, logout, isLoading, token, user}}>
+    <AuthContext.Provider value={{logout, isLoading, token, user, setUser}}>
       {children}
     </AuthContext.Provider>
   );

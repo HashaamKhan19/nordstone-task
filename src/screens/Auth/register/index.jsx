@@ -13,15 +13,12 @@ const Register = ({navigation}) => {
   const [password, setPassword] = React.useState('');
   const [loading, setLoading] = React.useState(false);
 
-  const handleLogin = async data => {
-    let info = {email: data.email, password: data.password};
-    console.log('ifo', info);
+  const handleRegister = async data => {
     setLoading(true);
     auth()
-      .createUserWithEmailAndPassword(data.email, data.password)
+      .createUserWithEmailAndPassword(data?.email, data?.password)
       .then(() => {
         setLoading(false);
-        console.log('User account created & signed in!');
         navigation.navigate('Login');
       })
       .catch(error => {
@@ -48,7 +45,7 @@ const Register = ({navigation}) => {
         <BasicButton
           text="Sign Up"
           onPress={() => {
-            handleLogin({email, password});
+            handleRegister({email, password});
           }}
           loading={loading}
         />

@@ -1,28 +1,56 @@
 import {View, StyleSheet, Text} from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import TextField from '../../../components/shared/TextField';
 import BasicButton from '../../../components/shared/Button';
 import dimensions from '../../../utils/dimensions';
 import colors from '../../../utils/colors';
 import fonts from '../../../utils/fonts';
 
+import auth from '@react-native-firebase/auth';
+import {AuthContext} from '../../../context/AuthContext';
+import deviceStorage from '../../../utils/deviceStorage';
+
 const Login = ({navigation}) => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
+
+  const {setUser} = useContext(AuthContext);
+
+  const handleLogin = async data => {
+    setLoading(true);
+    auth()
+      .signInWithEmailAndPassword(data.email, data.password)
+      .then(dataa => {
+        setLoading(false);
+        setUser(JSON.stringify(dataa.user));
+        deviceStorage.saveItem('uid', JSON.stringify(dataa.user.uid));
+      })
+      .catch(error => {
+        setLoading(false);
+        console.error(error);
+      });
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.formContainer}>
         <Text style={styles.logo}>LOGO</Text>
-        <TextField value={email} onChangeText={setEmail} label={'Email'} />
+        <TextField value={email} onChange={setEmail} label={'Email'} />
         <TextField
           secureTextEntry={true}
           value={password}
-          onChangeText={setPassword}
+          onChange={setPassword}
           label={'Password'}
         />
         <Text style={styles.forgotPswd}>Forgot Password?</Text>
-        <BasicButton text="Login" />
+        <BasicButton
+          text="Login"
+          loading={loading}
+          onPress={() => {
+            handleLogin({email, password});
+          }}
+        />
         <Text style={styles.signUp}>
           Don't have an account?{' '}
           <Text
