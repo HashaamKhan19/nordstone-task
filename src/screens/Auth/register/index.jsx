@@ -6,22 +6,52 @@ import dimensions from '../../../utils/dimensions';
 import colors from '../../../utils/colors';
 import fonts from '../../../utils/fonts';
 
+import auth from '@react-native-firebase/auth';
+
 const Register = ({navigation}) => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
+
+  const handleLogin = async data => {
+    let info = {email: data.email, password: data.password};
+    console.log('ifo', info);
+    setLoading(true);
+    auth()
+      .createUserWithEmailAndPassword(data.email, data.password)
+      .then(() => {
+        setLoading(false);
+        console.log('User account created & signed in!');
+        navigation.navigate('Login');
+      })
+      .catch(error => {
+        setLoading(false);
+        console.error(error.message);
+      });
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.formContainer}>
         <Text style={styles.logo}>LOGO</Text>
-        <TextField value={email} onChangeText={setEmail} label={'Email'} />
+        <TextField
+          value={email}
+          label={'Email'}
+          onChange={email => setEmail(email)}
+        />
         <TextField
           secureTextEntry={true}
           value={password}
-          onChangeText={setPassword}
+          onChange={password => setPassword(password)}
           label={'Password'}
         />
-        <BasicButton text="Sign Up" />
+        <BasicButton
+          text="Sign Up"
+          onPress={() => {
+            handleLogin({email, password});
+          }}
+          loading={loading}
+        />
         <Text style={styles.signUp}>
           Already have an account?{' '}
           <Text

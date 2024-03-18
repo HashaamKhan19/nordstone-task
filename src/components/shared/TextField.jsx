@@ -29,7 +29,6 @@ const TextField = ({
           onChangeText={onChange}
           value={value}
           placeholder={placeholder}
-          styling={styles.input}
           secureTextEntry={secureTextEntry}
           style={styles.input}
           keyboardType={keyboardType}
