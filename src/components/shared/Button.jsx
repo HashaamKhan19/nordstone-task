@@ -44,7 +44,7 @@ const styles = (color, alignEnd, outlined) =>
         : colors.primary,
       borderWidth: outlined ? 1 : 0,
       borderColor: outlined ? colors.blue1 : null,
-      borderRadius: 10,
+      borderRadius: 12,
       justifyContent: 'center',
       alignItems: 'center',
     },

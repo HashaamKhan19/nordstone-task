@@ -40,24 +40,21 @@ const styles = StyleSheet.create({
   container: {
     marginBottom: dimensions.Height * 0.02,
   },
-
   inputContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     width: dimensions.Width * 0.9,
     height: dimensions.Height * 0.06,
-    backgroundColor: colors.white2,
-    borderRadius: 5,
+    backgroundColor: colors.backgroundLight,
+    borderRadius: 8,
     borderWidth: 0.3,
     borderColor: colors.gray,
     paddingHorizontal: dimensions.Width * 0.05,
   },
-
   input: {
     flex: 1,
   },
-
   error: {
     color: colors.red,
     fontSize: fonts.size.font12,
