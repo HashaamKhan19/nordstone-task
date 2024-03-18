@@ -2,30 +2,30 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const deviceStorage = {
   //save or update an item
-  async saveItem(key: string, value: any) {
+  async saveItem(key, value) {
     try {
       const storeValue = JSON.stringify(value);
       await AsyncStorage.setItem(key, storeValue);
-    } catch (error: any) {
+    } catch (error) {
       console.log('AsyncStorage Error: ' + error.message);
     }
   },
 
   //load item from async storage
-  async loadItem(key: string) {
+  async loadItem(key) {
     try {
       const value = await AsyncStorage.getItem(key);
       return value != null ? JSON.parse(value) : null;
-    } catch (error: any) {
+    } catch (error) {
       console.log('AsyncStorage Error: ' + error.message);
     }
   },
 
   //delete item from async storage
-  async deleteItem(key: string) {
+  async deleteItem(key) {
     try {
       await AsyncStorage.removeItem(key);
-    } catch (error: any) {
+    } catch (error) {
       console.log('AsyncStorage Error: ' + error.message);
     }
   },
@@ -35,7 +35,7 @@ const deviceStorage = {
     try {
       const keys = await AsyncStorage.getAllKeys();
       return keys;
-    } catch (error: any) {
+    } catch (error) {
       console.log('AsyncStorage Error: ' + error.message);
     }
   },
