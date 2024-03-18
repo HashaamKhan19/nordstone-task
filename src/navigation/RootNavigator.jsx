@@ -21,7 +21,7 @@ function RootNavigator() {
 
   return (
     <NavigationContainer>
-      {token == null ? <HomeNavigator /> : <AuthNavigator />}
+      {token != null ? <HomeNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );
 }
