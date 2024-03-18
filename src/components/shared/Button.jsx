@@ -49,9 +49,8 @@ const styles = (color, alignEnd, outlined) =>
       alignItems: 'center',
     },
     buttonText: {
-      fontFamily: fonts.family.Inter,
+      fontFamily: 'Urbanist-Bold',
       fontSize: fonts.size.font14,
-      fontWeight: fonts.weight.bold,
       color: outlined ? colors.primary : colors.background,
     },
   });

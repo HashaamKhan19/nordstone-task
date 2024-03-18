@@ -23,9 +23,7 @@ const weight = {
 };
 
 const family = {
-  Mont: 'Montserrat-Regular',
-  Inter: 'Inter-Regular',
-  IBM: 'IBMPlexSansDevanagari-Regular',
+  Urbanist: 'Urbanist-Regular',
 };
 
 export default {

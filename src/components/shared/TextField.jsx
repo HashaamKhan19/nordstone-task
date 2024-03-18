@@ -1,4 +1,10 @@
-import {StyleSheet, View, TextInput, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
 import React from 'react';
 
 import dimensions from '../../utils/dimensions';
@@ -13,9 +19,11 @@ const TextField = ({
   keyboardType = 'default',
   value = '',
   onChange,
+  label,
 }) => {
   return (
     <View style={styles.container}>
+      {label && <Text style={styles.label}>{label}</Text>}
       <View style={styles.inputContainer}>
         <TextInput
           onChangeText={onChange}
@@ -59,5 +67,12 @@ const styles = StyleSheet.create({
     color: colors.red,
     fontSize: fonts.size.font12,
     marginTop: dimensions.Height * 0.01,
+  },
+  label: {
+    fontSize: fonts.size.font14,
+    color: colors.black,
+    fontWeight: fonts.weight.semi,
+    marginBottom: dimensions.Height * 0.01,
+    fontFamily: 'Urbanist-SemiBold',
   },
 });

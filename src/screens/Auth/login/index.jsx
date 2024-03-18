@@ -1,4 +1,4 @@
-import {View, Image, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import React from 'react';
 import TextField from '../../../components/shared/TextField';
 import BasicButton from '../../../components/shared/Button';
@@ -6,40 +6,32 @@ import dimensions from '../../../utils/dimensions';
 import colors from '../../../utils/colors';
 import fonts from '../../../utils/fonts';
 
-const Login = () => {
-  const [username, setUsername] = React.useState('');
+const Login = ({navigation}) => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
   return (
     <View style={styles.container}>
-      <Image
-        source={require('../../../assets/images/logo.png')}
-        style={styles.logo}
-        resizeMode="contain"
-      />
       <View style={styles.formContainer}>
+        <Text style={styles.logo}>LOGO</Text>
+        <TextField value={email} onChangeText={setEmail} label={'Email'} />
         <TextField
-          placeholder="Username"
-          value={username}
-          onChangeText={setUsername}
-        />
-        <TextField
-          placeholder="Email Address"
-          value={email}
-          onChangeText={setEmail}
-        />
-        <TextField
-          placeholder="Password"
           secureTextEntry={true}
           value={password}
           onChangeText={setPassword}
+          label={'Password'}
         />
         <Text style={styles.forgotPswd}>Forgot Password?</Text>
         <BasicButton text="Login" />
         <Text style={styles.signUp}>
           Don't have an account?{' '}
-          <Text style={{color: colors.primary}}>Signup</Text>
+          <Text
+            style={{color: colors.primary}}
+            onPress={() => {
+              navigation.navigate('Register');
+            }}>
+            Sign up
+          </Text>
         </Text>
       </View>
     </View>
@@ -53,20 +45,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-    width: dimensions.Width * 0.2,
-    height: dimensions.Width * 0.2,
+    textAlign: 'center',
+    fontSize: fonts.size.font31,
+    fontFamily: 'Urbanist-Bold',
     marginBottom: dimensions.Height * 0.04,
   },
   forgotPswd: {
     color: colors.primary,
     textAlign: 'right',
     fontSize: fonts.size.font15,
-    fontWeight: fonts.weight.semi,
+    fontFamily: 'Urbanist-Medium',
   },
   signUp: {
     textAlign: 'center',
     fontSize: fonts.size.font15,
-    fontWeight: fonts.weight.low,
+    fontFamily: 'Urbanist-Medium',
     marginTop: dimensions.Height * 0.02,
   },
   formContainer: {
