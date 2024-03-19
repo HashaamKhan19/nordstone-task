@@ -4,6 +4,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 //ICONS
+import Icon from 'react-native-vector-icons/Ionicons';
 
 //Screens
 import dimensions from '../utils/dimensions';
@@ -33,12 +34,12 @@ const HomeNavigator = () => {
         tabBarIcon: ({focused, color, size}) => {
           if (route.name === 'Notifications') {
             return (
-              <View style={focused ? styles.activeStyle : styles.inactiveStyle}>
-                {/* <HomeIcon
-                  fill={focused ? colors.blue1 : colors.gray}
-                  width={dimensions.Width / 17}
-                  height={dimensions.Height / 17}
-                /> */}
+              <View style={styles.activeStyle}>
+                <Icon
+                  name="notifications"
+                  size={24}
+                  color={focused ? colors.primary : colors.gray}
+                />
                 <Text style={focused ? styles.activeText : styles.inactiveText}>
                   Notifications
                 </Text>
@@ -47,12 +48,12 @@ const HomeNavigator = () => {
           }
           if (route.name === 'PicUpload') {
             return (
-              <View style={focused ? styles.activeStyle : styles.inactiveStyle}>
-                {/* <RewardsIcon
-                  fill={focused ? colors.primary : colors.gray}
-                  width={dimensions.Width / 17}
-                  height={dimensions.Height / 17}
-                /> */}
+              <View style={styles.activeStyle}>
+                <Icon
+                  name="camera"
+                  size={24}
+                  color={focused ? colors.primary : colors.gray}
+                />
                 <Text style={focused ? styles.activeText : styles.inactiveText}>
                   Picture Upload
                 </Text>
@@ -61,12 +62,12 @@ const HomeNavigator = () => {
           }
           if (route.name === 'TextUpload') {
             return (
-              <View style={focused ? styles.activeStyle : styles.inactiveStyle}>
-                {/* <SettingsIcon
-                  fill={focused ? Colors.blue1 : Colors.gray}
-                  width={dimensions.Width / 17}
-                  height={dimensions.Height / 17}
-                /> */}
+              <View style={styles.activeStyle}>
+                <Icon
+                  name="document-text"
+                  size={24}
+                  color={focused ? colors.primary : colors.gray}
+                />
                 <Text style={focused ? styles.activeText : styles.inactiveText}>
                   Text Upload
                 </Text>
@@ -75,12 +76,12 @@ const HomeNavigator = () => {
           }
           if (route.name === 'Calculator') {
             return (
-              <View style={focused ? styles.activeStyle : styles.inactiveStyle}>
-                {/* <ResponseIcon
-                  fill={focused ? Colors.blue1 : Colors.gray}
-                  width={dimensions.Width / 17}
-                  height={dimensions.Height / 17}
-                /> */}
+              <View style={styles.activeStyle}>
+                <Icon
+                  name="calculator"
+                  size={24}
+                  color={focused ? colors.primary : colors.gray}
+                />
                 <Text style={focused ? styles.activeText : styles.inactiveText}>
                   Calculator
                 </Text>
@@ -104,24 +105,18 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  inactiveStyle: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    gap: dimensions.Height * 0.015,
   },
   activeText: {
-    color: colors.blue1,
-    fontSize: 10,
-    fontFamily: fonts.family.Inter,
-    fontWeight: fonts.weight.semi,
+    color: colors.primary,
+    fontSize: fonts.size.font13,
+    fontFamily: 'Urbanist-SemiBold',
     marginTop: -10,
   },
   inactiveText: {
     color: colors.gray,
-    fontSize: 10,
-    fontFamily: fonts.family.Inter,
-    fontWeight: fonts.weight.semi,
+    fontSize: fonts.size.font13,
+    fontFamily: 'Urbanist-SemiBold',
     marginTop: -10,
   },
 });
