@@ -25,7 +25,7 @@ const HomeNavigator = () => {
         tabBarHideOnKeyboard: true,
         headerShown: false,
         tabBarShowLabel: false,
-
+        tabBarHideOnKeyboard: true,
         tabBarStyle: {
           height: dimensions.Height / 12,
           backgroundColor: colors.background,
@@ -55,7 +55,7 @@ const HomeNavigator = () => {
                   color={focused ? colors.primary : colors.gray}
                 />
                 <Text style={focused ? styles.activeText : styles.inactiveText}>
-                  Picture Upload
+                  Pic Upload
                 </Text>
               </View>
             );
