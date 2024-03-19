@@ -11,10 +11,13 @@ import {AuthContext} from '../../../context/AuthContext';
 import deviceStorage from '../../../utils/deviceStorage';
 import {notification} from '../../../components/notification';
 
+import Icon from 'react-native-vector-icons/Ionicons';
+
 const Login = ({navigation}) => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [loading, setLoading] = React.useState(false);
+  const [hidePassword, setHidePassword] = React.useState(true);
 
   const {setUser} = useContext(AuthContext);
 
@@ -36,6 +39,18 @@ const Login = ({navigation}) => {
 
   const handleLogin = async data => {
     setLoading(true);
+
+    if (data.email === '' || data.password === '') {
+      setLoading(false);
+      notification(
+        (type = 'error'),
+        (title = 'Error'),
+        (textBody = 'All fields are required'),
+        700,
+      );
+      return;
+    }
+
     auth()
       .signInWithEmailAndPassword(data.email, data.password)
       .then(dataa => {
@@ -78,10 +93,18 @@ const Login = ({navigation}) => {
         <Text style={styles.logo}>LOGO</Text>
         <TextField value={email} onChange={setEmail} label={'Email'} />
         <TextField
-          secureTextEntry={true}
+          secureTextEntry={hidePassword}
           value={password}
           onChange={setPassword}
           label={'Password'}
+          icon={
+            <Icon
+              name={hidePassword ? 'eye-off-outline' : 'eye-outline'}
+              size={24}
+              color={colors.black}
+            />
+          }
+          onIconClick={() => setHidePassword(prevState => !prevState)}
         />
         <Text
           style={styles.forgotPswd}

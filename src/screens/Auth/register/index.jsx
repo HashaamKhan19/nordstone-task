@@ -9,13 +9,55 @@ import fonts from '../../../utils/fonts';
 import auth from '@react-native-firebase/auth';
 import {notification} from '../../../components/notification';
 
+import Icon from 'react-native-vector-icons/Ionicons';
+
 const Register = ({navigation}) => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [loading, setLoading] = React.useState(false);
+  const [hidePassword, setHidePassword] = React.useState(true);
+
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  const passwordRegex =
+    /^(?=.*[0-9])(?=.*[!@#$%^&*()-_+=])[A-Za-z0-9!@#$%^&*()-_+=]{5,}$/;
 
   const handleRegister = async data => {
     setLoading(true);
+
+    if (data.email === '' || data.password === '') {
+      setLoading(false);
+      notification(
+        (type = 'error'),
+        (title = 'Error'),
+        (textBody = 'All fields are required'),
+        1000,
+      );
+      return;
+    }
+
+    if (!emailRegex.test(data.email)) {
+      setLoading(false);
+      notification(
+        (type = 'error'),
+        (title = 'Error'),
+        (textBody = 'Invalid email'),
+        1000,
+      );
+      return;
+    }
+
+    if (!passwordRegex.test(data.password)) {
+      setLoading(false);
+      notification(
+        (type = 'error'),
+        (title = 'Error'),
+        (textBody =
+          'Password must contain at least 8 characters, including at least 1 letter and 1 number'),
+        3000,
+      );
+      return;
+    }
+
     auth()
       .createUserWithEmailAndPassword(data?.email, data?.password)
       .then(() => {
@@ -66,6 +108,14 @@ const Register = ({navigation}) => {
           value={password}
           onChange={password => setPassword(password)}
           label={'Password'}
+          icon={
+            <Icon
+              name={hidePassword ? 'eye-off-outline' : 'eye-outline'}
+              size={24}
+              color={colors.black}
+            />
+          }
+          onIconClick={() => setHidePassword(prevState => !prevState)}
         />
         <BasicButton
           text="Sign Up"
