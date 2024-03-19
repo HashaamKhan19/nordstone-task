@@ -83,7 +83,13 @@ const Login = ({navigation}) => {
           onChange={setPassword}
           label={'Password'}
         />
-        <Text style={styles.forgotPswd}>Forgot Password?</Text>
+        <Text
+          style={styles.forgotPswd}
+          onPress={() => {
+            navigation.navigate('ForgotPassword');
+          }}>
+          Forgot Password?
+        </Text>
         <BasicButton
           text="Login"
           loading={loading}
