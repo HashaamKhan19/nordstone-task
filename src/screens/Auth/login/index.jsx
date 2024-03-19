@@ -41,7 +41,7 @@ const Login = ({navigation}) => {
       .then(dataa => {
         setLoading(false);
         setUser(JSON.stringify(dataa.user));
-        deviceStorage.saveItem('uid', JSON.stringify(dataa.user.uid));
+        deviceStorage.saveItem('user', dataa.user);
 
         notification(
           (type = 'success'),
