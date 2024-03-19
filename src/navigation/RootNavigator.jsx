@@ -8,6 +8,9 @@ import {AuthContext} from '../context/AuthContext';
 import HomeNavigator from './HomeNavigator';
 import AuthNavigator from './AuthNavigator';
 
+import {AlertNotificationRoot} from 'react-native-alert-notification';
+import {IColors} from '../utils/IColors';
+
 function RootNavigator() {
   const {isLoading, token} = useContext(AuthContext);
 
@@ -21,7 +24,9 @@ function RootNavigator() {
 
   return (
     <NavigationContainer>
-      {token != null ? <HomeNavigator /> : <AuthNavigator />}
+      <AlertNotificationRoot theme="light" colors={[IColors]}>
+        {token != null ? <HomeNavigator /> : <AuthNavigator />}
+      </AlertNotificationRoot>
     </NavigationContainer>
   );
 }

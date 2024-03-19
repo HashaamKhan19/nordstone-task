@@ -7,6 +7,7 @@ import colors from '../../../utils/colors';
 import fonts from '../../../utils/fonts';
 
 import auth from '@react-native-firebase/auth';
+import {notification} from '../../../components/notification';
 
 const Register = ({navigation}) => {
   const [email, setEmail] = React.useState('');
@@ -19,11 +20,35 @@ const Register = ({navigation}) => {
       .createUserWithEmailAndPassword(data?.email, data?.password)
       .then(() => {
         setLoading(false);
+
+        notification(
+          (type = 'success'),
+          (title = 'Success'),
+          (textBody = 'Congrats! Account Registered Successfully!'),
+          700,
+        );
+
         navigation.navigate('Login');
       })
       .catch(error => {
         setLoading(false);
         console.error(error.message);
+
+        // ERROR  [auth/email-already-in-use] The email address is already in use by another account.
+
+        let errorMessage = 'An unknown error occurred.';
+        if (error.message.includes('[auth/email-already-in-use]')) {
+          errorMessage = 'Email address already in use!';
+        } else {
+          errorMessage = error.message;
+        }
+
+        notification(
+          (type = 'error'),
+          (title = 'Error'),
+          (textBody = errorMessage),
+          700,
+        );
       });
   };
 

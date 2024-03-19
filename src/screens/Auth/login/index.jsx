@@ -9,6 +9,7 @@ import fonts from '../../../utils/fonts';
 import auth from '@react-native-firebase/auth';
 import {AuthContext} from '../../../context/AuthContext';
 import deviceStorage from '../../../utils/deviceStorage';
+import {notification} from '../../../components/notification';
 
 const Login = ({navigation}) => {
   const [email, setEmail] = React.useState('');
@@ -16,6 +17,22 @@ const Login = ({navigation}) => {
   const [loading, setLoading] = React.useState(false);
 
   const {setUser} = useContext(AuthContext);
+
+  React.useEffect(() => {
+    return () => {
+      setEmail('');
+      setPassword('');
+    };
+  }, []);
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('blur', () => {
+      setEmail('');
+      setPassword('');
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   const handleLogin = async data => {
     setLoading(true);
@@ -25,10 +42,33 @@ const Login = ({navigation}) => {
         setLoading(false);
         setUser(JSON.stringify(dataa.user));
         deviceStorage.saveItem('uid', JSON.stringify(dataa.user.uid));
+
+        notification(
+          (type = 'success'),
+          (title = 'Success'),
+          (textBody = 'Congrats! You are Signed In'),
+          500,
+        );
       })
       .catch(error => {
         setLoading(false);
         console.error(error);
+
+        let errorMessage = 'An unknown error occurred.';
+        if (error.message.includes('[auth/wrong-password]')) {
+          errorMessage = 'The password is invalid';
+        } else if (error.message.includes('[auth/user-not-found]')) {
+          errorMessage = 'User not found';
+        } else {
+          errorMessage = error.message;
+        }
+
+        notification(
+          (type = 'error'),
+          (title = 'Error'),
+          (textBody = errorMessage),
+          700,
+        );
       });
   };
 
