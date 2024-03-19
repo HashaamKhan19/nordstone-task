@@ -18,11 +18,12 @@ const BasicButton = ({
   alignEnd = false,
   outlined = false,
   loading,
+  width,
 }) => {
   return (
     <View style={styles(null, alignEnd).button}>
       <TouchableOpacity
-        style={styles(color, null, outlined).btn}
+        style={styles(color, null, outlined, width).btn}
         onPress={onPress}>
         {loading ? (
           <ActivityIndicator size="small" color={colors.background} />
@@ -36,7 +37,7 @@ const BasicButton = ({
 
 export default BasicButton;
 
-const styles = (color, alignEnd, outlined) =>
+const styles = (color, alignEnd, outlined, width) =>
   StyleSheet.create({
     button: {
       flex: alignEnd ? 1 : null,
@@ -46,15 +47,16 @@ const styles = (color, alignEnd, outlined) =>
       marginBottom: alignEnd ? dimensions.Height * 0.03 : null,
     },
     btn: {
-      width: dimensions.Width * 0.9,
+      // width: dimensions.Width * 0.9,
+      width: width ? width : dimensions.Width * 0.9,
       height: dimensions.Height * 0.06,
       backgroundColor: outlined
-        ? colors.background
+        ? colors.primaryLight
         : color
         ? color
         : colors.primary,
       borderWidth: outlined ? 1 : 0,
-      borderColor: outlined ? colors.blue1 : null,
+      borderColor: outlined ? colors.primaryLight : null,
       borderRadius: 12,
       justifyContent: 'center',
       alignItems: 'center',
