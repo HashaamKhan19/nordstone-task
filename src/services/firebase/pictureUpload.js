@@ -4,6 +4,7 @@ import ImageCropPicker from 'react-native-image-crop-picker';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import deviceStorage from '../../utils/deviceStorage';
+import {notification} from '../../components/notification';
 
 export const selectFromGallery = async () => {
   try {
@@ -104,7 +105,7 @@ export const uploadFromCamera = async () => {
   }
 };
 
-export const uploadPicture = async picture => {
+export const uploadPicture = async (picture, onUploadComplete) => {
   const userInfoString = await deviceStorage.loadItem('user');
   if (!userInfoString) {
     return null;
@@ -118,6 +119,12 @@ export const uploadPicture = async picture => {
     await task;
     task.then(() => {
       console.log('Image uploaded to the bucket!');
+      notification(
+        (type = 'success'),
+        (title = 'Success'),
+        (textBody = 'Image uploaded successfully!'),
+        1000,
+      );
     });
     const url = await storage().ref(ref).getDownloadURL();
     try {

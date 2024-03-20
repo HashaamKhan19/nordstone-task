@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, ActivityIndicator} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import fonts from '../../../utils/fonts';
 import dimensions from '../../../utils/dimensions';
@@ -15,6 +15,7 @@ const PicUpload = () => {
   const [imageUrl, setImageUrl] = useState('');
   const [imageSelected, setImageSelected] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   const loadPicture = async () => {
     setLoading(true);
@@ -36,48 +37,67 @@ const PicUpload = () => {
       })
       .catch(error => {
         console.error('Error fetching image:', error);
+        setLoading(false);
       });
-    setLoading(false);
   };
 
   useEffect(() => {
     loadPicture();
   }, []);
 
+  const handleUploadPicture = async () => {
+    setUploading(true);
+    try {
+      const newImageUrl = await uploadPicture(imageUrl);
+      setImageUrl(newImageUrl);
+      setImageSelected(false);
+    } catch (error) {
+      console.error('Error uploading picture:', error);
+    } finally {
+      setUploading(false);
+    }
+  };
+
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.body}>
-          {imageUrl ? (
-            <Image source={{uri: imageUrl}} style={styles.image} />
-          ) : (
-            <Image
-              source={require(`../../../assets/images/user.png`)}
-              style={styles.image}
-            />
-          )}
+        {!uploading ? (
+          <View style={styles.body}>
+            {loading ? (
+              <ActivityIndicator size="large" color={colors.primary} />
+            ) : imageUrl ? (
+              <Image source={{uri: imageUrl}} style={styles.image} />
+            ) : (
+              <Image
+                source={require(`../../../assets/images/user.png`)}
+                style={styles.image}
+              />
+            )}
 
-          <Text style={styles.txt}>
-            Upload a picture using the camera or gallery.
-          </Text>
+            <Text style={styles.txt}>
+              Upload a picture using the camera or gallery.
+            </Text>
 
-          {imageSelected && (
+            {imageSelected && (
+              <BasicButton
+                outlined
+                text={'Upload Image'}
+                onPress={handleUploadPicture}
+              />
+            )}
+
             <BasicButton
-              outlined
-              text={'Upload Image'}
-              onPress={async () => {
-                await uploadPicture(imageUrl);
+              text={'Select Image'}
+              onPress={() => {
+                setModalVisible(true);
               }}
             />
-          )}
-
-          <BasicButton
-            text={'Select Image'}
-            onPress={() => {
-              setModalVisible(true);
-            }}
-          />
-        </View>
+          </View>
+        ) : (
+          <View style={styles.loaderContainer}>
+            <ActivityIndicator size="large" color={colors.primary} />
+          </View>
+        )}
       </View>
 
       <MediaPicker
@@ -93,6 +113,11 @@ const PicUpload = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   body: {
     flex: 1,
