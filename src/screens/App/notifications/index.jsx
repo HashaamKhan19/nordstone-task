@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
   txt: {
     fontSize: fonts.size.font15,
     fontFamily: 'Urbanist-Bold',
+    color: colors.black,
   },
   notificationText: {
     fontSize: fonts.size.font15,
@@ -65,6 +66,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: dimensions.Height * 0.02,
     paddingHorizontal: dimensions.Width * 0.08,
+    color: colors.black,
   },
 });
 

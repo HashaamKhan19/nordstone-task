@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: dimensions.Height * 0.02,
     paddingHorizontal: dimensions.Width * 0.08,
+    color: colors.black,
   },
   image: {
     height: dimensions.Height * 0.3,

@@ -7,6 +7,7 @@ import TextField from '../../../components/shared/TextField';
 import Dropdown from '../../../components/shared/Dropdown';
 import {notification} from '../../../components/notification';
 import {calculateData} from '../../../api';
+import colors from '../../../utils/colors';
 
 const Calculator = () => {
   const [number1, setNumber1] = useState('');
@@ -127,14 +128,16 @@ const styles = StyleSheet.create({
     fontSize: fonts.size.font16,
     fontFamily: 'Urbanist-Medium',
     textAlign: 'center',
-    marginBottom: dimensions.Height * 0.02,
+    marginBottom: dimensions.Height * 0.03,
     paddingHorizontal: dimensions.Width * 0.08,
+    color: colors.black,
   },
   result: {
     fontSize: fonts.size.font16,
     fontFamily: 'Urbanist-Medium',
     textAlign: 'center',
     marginTop: dimensions.Height * 0.03,
+    color: colors.black,
   },
 });
 

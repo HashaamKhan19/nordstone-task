@@ -61,6 +61,8 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
+    borderRadius: 8,
+    color: colors.black,
   },
   error: {
     color: colors.red,

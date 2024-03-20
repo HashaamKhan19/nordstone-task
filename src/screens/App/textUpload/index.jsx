@@ -8,6 +8,7 @@ import {uploadText} from '../../../services/firebase/textUpload';
 import {notification} from '../../../components/notification';
 import deviceStorage from '../../../utils/deviceStorage';
 import firestore from '@react-native-firebase/firestore';
+import colors from '../../../utils/colors';
 
 const TextUpload = () => {
   const [text, setText] = useState('');
@@ -109,6 +110,7 @@ const styles = StyleSheet.create({
   txt: {
     fontSize: fonts.size.font18,
     fontFamily: 'Urbanist-Bold',
+    color: colors.black,
   },
   mytext: {
     width: dimensions.Width * 0.9,
@@ -120,6 +122,7 @@ const styles = StyleSheet.create({
     fontSize: fonts.size.font17,
     fontFamily: 'Urbanist-Medium',
     marginVertical: dimensions.Height * 0.01,
+    color: colors.black,
   },
 });
 

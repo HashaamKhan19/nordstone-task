@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
     fontSize: fonts.size.font31,
     fontFamily: 'Urbanist-Bold',
     marginBottom: dimensions.Height * 0.04,
+    color: colors.black,
   },
   forgotPswd: {
     color: colors.primary,
@@ -158,6 +159,7 @@ const styles = StyleSheet.create({
     fontSize: fonts.size.font15,
     fontFamily: 'Urbanist-Medium',
     marginTop: dimensions.Height * 0.02,
+    color: colors.black,
   },
   formContainer: {
     gap: dimensions.Height * 0.01,

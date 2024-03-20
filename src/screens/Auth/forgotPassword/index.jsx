@@ -15,6 +15,18 @@ const ForgotPassword = ({navigation}) => {
 
   const sendResetLink = async data => {
     setLoading(true);
+
+    if (data.email === '') {
+      setLoading(false);
+      notification(
+        (type = 'error'),
+        (title = 'Error'),
+        (textBody = 'All fields are required'),
+        1000,
+      );
+      return;
+    }
+
     auth()
       .sendPasswordResetEmail(data.email)
       .then(() => {
@@ -107,11 +119,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: fonts.size.font18,
     fontFamily: 'Urbanist-Bold',
+    color: colors.black,
   },
   txtInfo: {
     textAlign: 'center',
     fontSize: fonts.size.font14,
     fontFamily: 'Urbanist-Medium',
+    color: colors.black,
   },
   back: {
     position: 'absolute',
