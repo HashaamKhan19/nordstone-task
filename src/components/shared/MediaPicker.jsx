@@ -1,23 +1,37 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 
 import ModalContainer from '../../components/containers/ModalContainer';
 
 import dimensions from '../../utils/dimensions';
 import colors from '../../utils/colors';
-import fonts from '../../utils/fonts';
 
 import Icon from 'react-native-vector-icons/Entypo';
 import BasicButton from './Button';
 
+import {
+  selectFromGallery,
+  uploadFromCamera,
+} from '../../services/firebase/pictureUpload';
+
 export default MediaPicker = props => {
-  const {Visible, setModalVisible} = props;
+  const {Visible, setModalVisible, setImageUrl, setImageSelected} = props;
+
+  const handleGallery = () => {
+    setModalVisible(false);
+    selectFromGallery().then(image => {
+      image.path && setImageUrl(image.path);
+      image.path && setImageSelected(true);
+    });
+  };
+
+  const handlePicture = () => {
+    setModalVisible(false);
+    uploadFromCamera().then(image => {
+      image.path && setImageUrl(image.path);
+      image.path && setImageSelected(true);
+    });
+  };
 
   return (
     <ModalContainer
@@ -36,11 +50,13 @@ export default MediaPicker = props => {
             text={'From Gallery'}
             width={dimensions.Width * 0.6}
             outlined
+            onPress={handleGallery}
           />
           <BasicButton
             text={'Take Picture'}
             width={dimensions.Width * 0.6}
             outlined
+            onPress={handlePicture}
           />
         </View>
       </View>
