@@ -6,14 +6,18 @@ import BasicButton from '../../../components/shared/Button';
 import TextField from '../../../components/shared/TextField';
 import Dropdown from '../../../components/shared/Dropdown';
 import {notification} from '../../../components/notification';
+import {calculateData} from '../../../api';
 
 const Calculator = () => {
   const [number1, setNumber1] = useState('');
   const [number2, setNumber2] = useState('');
   const [selectedOperation, setSelectedOperation] = useState('');
+  const [result, setResult] = useState('');
+  const [loading, setLoading] = useState(false);
   const operations = ['Add', 'Subtract', 'Multiply', 'Divide'];
 
-  const calculateResult = () => {
+  const calculateResult = async () => {
+    setLoading(true);
     if (number1 === '' || number2 === '' || selectedOperation === '') {
       notification(
         (type = 'warning'),
@@ -21,6 +25,7 @@ const Calculator = () => {
         (textBody = 'Please write something to upload!'),
         1000,
       );
+      setLoading(false);
       return;
     }
 
@@ -31,7 +36,30 @@ const Calculator = () => {
         (textBody = 'Please enter valid numbers!'),
         1000,
       );
+      setLoading(false);
       return;
+    }
+
+    try {
+      const response = await calculateData({
+        num1: number1,
+        num2: number2,
+        operation: selectedOperation.toLowerCase(),
+      });
+
+      setResult(response.data);
+
+      console.log('result', response.data);
+    } catch (error) {
+      console.error('Error calculating result:', error);
+      notification(
+        (type = 'error'),
+        (title = 'Error!'),
+        (textBody = 'An error occurred while calculating the result.'),
+        1000,
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -61,7 +89,17 @@ const Calculator = () => {
           />
         </View>
 
-        <BasicButton text={'Calculate Result'} onPress={calculateResult} />
+        {result !== '' && (
+          <Text style={styles.result}>
+            The result of the operation is: {result.result}
+          </Text>
+        )}
+
+        <BasicButton
+          text={'Calculate Result'}
+          onPress={calculateResult}
+          loading={loading}
+        />
       </View>
     </View>
   );
@@ -91,6 +129,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: dimensions.Height * 0.02,
     paddingHorizontal: dimensions.Width * 0.08,
+  },
+  result: {
+    fontSize: fonts.size.font16,
+    fontFamily: 'Urbanist-Medium',
+    textAlign: 'center',
+    marginTop: dimensions.Height * 0.03,
   },
 });
 
