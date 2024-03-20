@@ -30,6 +30,7 @@ const Notifications = () => {
         <BasicButton
           text={'Generate Notification'}
           onPress={buttonController}
+          color={colors.red}
         />
         <Text style={styles.notificationText}>
           Press the button to generate a new notification. Remember to allow the

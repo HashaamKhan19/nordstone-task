@@ -105,11 +105,19 @@ export const uploadFromCamera = async () => {
   }
 };
 
-export const uploadPicture = async (picture, onUploadComplete) => {
+export const uploadPicture = async picture => {
   const userInfoString = await deviceStorage.loadItem('user');
   if (!userInfoString) {
     return null;
   }
+
+  notification(
+    (type = 'warning'),
+    (title = 'Uploading Image...'),
+    (textBody = 'Please wait...'),
+    500,
+  );
+
   const email = userInfoString?.email;
   const uploadUri =
     Platform.OS === 'ios' ? picture?.replace('file://', '') : picture;
