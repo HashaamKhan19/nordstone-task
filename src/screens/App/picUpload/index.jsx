@@ -29,11 +29,16 @@ const PicUpload = () => {
       .where('email', '==', userInfoString?.email)
       .get()
       .then(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
-          const userData = documentSnapshot.data();
-          setImageUrl(userData?.image);
+        if (querySnapshot.empty) {
+          setImageUrl('');
           setLoading(false);
-        });
+        } else {
+          querySnapshot.forEach(documentSnapshot => {
+            const userData = documentSnapshot.data();
+            setImageUrl(userData?.image);
+          });
+          setLoading(false);
+        }
       })
       .catch(error => {
         console.error('Error fetching image:', error);
@@ -57,6 +62,8 @@ const PicUpload = () => {
       setUploading(false);
     }
   };
+
+  console.log('image urlll', imageUrl);
 
   return (
     <>
